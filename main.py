@@ -5,9 +5,11 @@ from models import *
 DATA = json.load(open('exampledata.json', 'r'))
 
 create_weapons(DATA['weapons'])
+create_armours(DATA["armors"])
 create_warriors(DATA['warriors'])
 
 print("Оружие: ", "\n".join([str(w) for w in Weapon.weapons]), sep="\n")
+print("Броня:", *Armor.armors, sep='\n')
 print("Воины: ", "\n".join([str(w) for w in Warrior.warriors]), sep="\n")
 
 w1 = Warrior.warriors[0]

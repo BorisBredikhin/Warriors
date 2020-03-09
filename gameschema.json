@@ -4,7 +4,8 @@
   "type": "object",
   "required": [
     "weapons",
-    "warriors"
+    "warriors",
+    "armors"
   ],
   "properties": {
     "weapons": {
@@ -63,6 +64,28 @@
               "Вася"
             ],
             "pattern": "^(.*)$"
+          }
+        }
+      }
+    },
+    "armors": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "damping",
+          "health",
+          "name"
+        ],
+        "properties": {
+          "damping": {
+            "type": "number"
+          },
+          "health": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string"
           }
         }
       }
