@@ -2,15 +2,18 @@
   "weapons": [
     {
       "name": "ложка",
-      "damage": 10
+      "damage": 10,
+      "threshold": 0.5
     },
     {
       "name": "вилка",
-      "damage": 15
+      "damage": 15,
+      "threshold": 0.7
     },
     {
       "name": "нож",
-      "damage": 30
+      "damage": 30,
+      "threshold": 0.9
     }
   ],
   "warriors": [

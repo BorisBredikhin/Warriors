@@ -12,15 +12,18 @@ class CreateFromJSON(unittest.TestCase):
   "weapons": [
     {
       "name": "ложка",
-      "damage": 10
+      "damage": 10,
+      "threshold": 0.5
     },
     {
       "name": "вилка",
-      "damage": 15
+      "damage": 15,
+      "threshold": 0.7
     },
     {
       "name": "нож",
-      "damage": 30
+      "damage": 30,
+      "threshold": 0.9
     }
   ],
   "warriors": [
@@ -33,7 +36,7 @@ class CreateFromJSON(unittest.TestCase):
   ],
   "armors": [
     {
-      "damping": 0.05,
+      "damping": 0.1,
       "health": 20,
       "name": "жилет"
     }
@@ -56,6 +59,7 @@ class CreateFromJSON(unittest.TestCase):
     def test_weapon_creation(self):
         self.assertEqual(3, len(Weapon.weapons))
         self.assertEqual('ложка', Weapon.weapons[0].name)
+        self.assertTrue(Weapon.weapons[0].threshold in [0.5, 0.7, 0.9])
 
     def test_warrior_creation(self):
         self.assertEqual(2, len(Warrior.warriors))

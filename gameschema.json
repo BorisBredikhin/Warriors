@@ -18,7 +18,8 @@
         "title": "The Items Schema",
         "required": [
           "name",
-          "damage"
+          "damage",
+          "threshold"
         ],
         "properties": {
           "name": {
@@ -39,6 +40,11 @@
             "examples": [
               10
             ]
+          },
+          "threshold": {
+            "$id": "#/properties/weapons/items/properties/threshold",
+            "type": "number",
+            "title": "must be in (0;1]"
           }
         }
       }

@@ -5,13 +5,22 @@ from typing import List
 class Weapon:
     weapons: List['Weapon'] = []  # static
 
-    def __init__(self, name: str, damage: int):
+    def __init__(self, name: str, damage: int, threshold: float):
         self.weapons.append(self)
         self.name = name
-        self.damage = damage
+        self._damage = damage
+        self.threshold = threshold
+
+    @property
+    def damage(self) -> int:
+        # threshold --- шанс попадания.
+        # Мы берём равномерно распределённую величину Х.
+        # Еесли её значение не превышает порога, то вероятность такого значения
+        # равна порогу и наносится удар.
+        return self._damage if random.uniform(0.0, 1.0) <= self.threshold else 0
 
     def __str__(self):
-        return f"{self.name}, урон {self.damage}"
+        return f"{self.name}, урон {self._damage}"
 
 
 class Armor:
@@ -30,16 +39,17 @@ class Armor:
         self.integrity = self.health = health
 
     def get_damage(self, weapon: 'Weapon') -> int:
+        weapon_damage = weapon.damage
         if self.integrity <= 0:
-            return weapon.damage
+            return weapon_damage
 
         k = self.damping * self.integrity / self.health
-        if k * weapon.damage > self.integrity:
-            r = k * weapon.damage - self.integrity
+        if k * weapon_damage > self.integrity:
+            r = k * weapon_damage - self.integrity
             self.integrity = 0
             return int(r)
-        self.integrity -= k * weapon.damage
-        return int((1 - k) * weapon.damage)
+        self.integrity -= k * weapon_damage
+        return int((1 - k) * weapon_damage)
 
     def __str__(self):
         return f"Броня {self.name} гасит {self.damping}"
@@ -70,23 +80,29 @@ class Warrior:
 
     def hit(self, enemy: 'Warrior'):
         if enemy.is_alive and self.is_alive:
-            enemy.set_damage(self.weapon)
+            damage = enemy.set_damage(self.weapon)
 
-            print(
-                f"{self.name} наносит удар оружием {self.weapon} {enemy.name} на {self.armor.get_damage(self.weapon)} урона, здоровье {enemy} {enemy.health} единиц")
-            if not enemy.is_alive:
-                print(f"{self.name} победил!")
+            if damage > 0:
+                print(
+                    f"{self.name} наносит удар оружием {self.weapon} {enemy.name} на {damage} урона, здоровье {enemy} {enemy.health} единиц")
+                if not enemy.is_alive:
+                    print(f"{enemy.name} погибает!")
+                    print(f"{self.name} победил!")
+            else:
+                print(f"{self.name} промахивается!")
 
     def set_damage(self, weapon):
-        self.health -= self.armor.get_damage(weapon)
+        damage = self.armor.get_damage(weapon)
+        self.health -= damage
         if self.health <= 0:
             self.is_alive = False
-            print(f"{self.name} погибает!")
+
+        return damage
 
 
 def create_weapons(data):
     for w in data:
-        Weapon(name=w.get("name", None), damage=w.get("damage", 0))
+        Weapon(name=w.get("name", None), damage=w.get("damage", 0), threshold=w.get("threshold", 1.0))
 
 
 def create_warriors(data):
