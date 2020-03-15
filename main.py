@@ -17,3 +17,6 @@ w2 = Warrior.warriors[1]
 
 while all([w1.is_alive, w2.is_alive]):
     random.choice([w1.hit(w2), w2.hit(w1)])
+
+for weapon in [w1.weapon, w2.weapon]:
+    print(f'Средний урон {weapon.name} - {weapon.average_damage}')

@@ -1,6 +1,8 @@
 import random
 from typing import List
 
+from utils import Averager
+
 
 class Weapon:
     weapons: List['Weapon'] = []  # static
@@ -10,6 +12,7 @@ class Weapon:
         self.name = name
         self._damage = damage
         self.threshold = threshold
+        self._total_damage = Averager()
 
     @property
     def damage(self) -> int:
@@ -18,6 +21,13 @@ class Weapon:
         # Еесли её значение не превышает порога, то вероятность такого значения
         # равна порогу и наносится удар.
         return self._damage if random.uniform(0.0, 1.0) <= self.threshold else 0
+
+    @property
+    def average_damage(self):
+        return float(self._total_damage)
+
+    def update_average_damage(self, damage):
+        self._total_damage.add(damage)
 
     def __str__(self):
         return f"{self.name}, урон {self._damage}"
@@ -81,6 +91,7 @@ class Warrior:
     def hit(self, enemy: 'Warrior'):
         if enemy.is_alive and self.is_alive:
             damage = enemy.set_damage(self.weapon)
+            self.weapon.update_average_damage(damage)
 
             if damage > 0:
                 print(
