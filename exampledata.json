@@ -14,6 +14,21 @@
       "name": "нож",
       "damage": 30,
       "threshold": 0.9
+    },
+    {
+      "name": "меч",
+      "damage": 30,
+      "threshold": 0.3
+    },
+    {
+      "name": "копьё",
+      "damage": 20,
+      "threshold": 0.6
+    },
+    {
+      "name": "шпага",
+      "damage": 10,
+      "threshold": 0.9
     }
   ],
   "warriors": [
