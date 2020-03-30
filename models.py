@@ -71,6 +71,7 @@ class Warrior:
     health = 100
     is_alive = True
     armor: 'Armor' = None
+    weapon: 'Weapon' = None
 
     def __init__(self, name="Default Warrior", weapon=None, armor=None):
         if weapon is None:
