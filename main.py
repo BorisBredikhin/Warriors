@@ -1,12 +1,8 @@
-import json
 
+from game import Game
 from models import *
 
-DATA = json.load(open('exampledata.json', 'r'))
-
-create_weapons(DATA['weapons'])
-create_armours(DATA["armors"])
-create_warriors(DATA['warriors'])
+game = Game(open('exampledata.json', 'r'))
 
 print("Оружие: ", "\n".join([str(w) for w in Weapon.weapons]), sep="\n")
 print("Броня:", *Armor.armors, sep='\n')

@@ -1,6 +1,9 @@
 import random
 from typing import List
 
+from pygame.sprite import Sprite
+from pygame.surface import Surface
+
 from utils import Averager
 
 
@@ -65,7 +68,7 @@ class Armor:
         return f"Броня {self.name} гасит {self.damping}"
 
 
-class Warrior:
+class Warrior(Sprite):
     warriors: List['Warrior'] = []  # static
 
     health = 100
@@ -73,7 +76,10 @@ class Warrior:
     armor: 'Armor' = None
     weapon: 'Weapon' = None
 
-    def __init__(self, name="Default Warrior", weapon=None, armor=None):
+    size = (10, 10)
+
+    def __init__(self, name="Default Warrior", weapon=None, armor=None, *groups):
+        super().__init__(*groups)
         if weapon is None:
             weapon = random.choice(Weapon.weapons)
         if armor is None:
@@ -85,6 +91,11 @@ class Warrior:
         self.weapon = weapon
         self.armor = armor
         self.default_damage = self.weapon.damage
+
+        self.image = Surface(self.size)
+        self.image.fill((255, 0, 0))
+
+        self.rect = self.image.get_rect()
 
     def __str__(self):
         return f"Воин {self.name}"
