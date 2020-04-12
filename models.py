@@ -98,7 +98,7 @@ class Warrior(Sprite):
         self.rect = self.image.get_rect()
 
     def __str__(self):
-        return f"Воин {self.name}"
+        return f"Воин {self.name}\nЗдоровье {self.health}\nБроня:{self.armor.health}"
 
     def hit(self, enemy: 'Warrior'):
         if enemy.is_alive and self.is_alive:

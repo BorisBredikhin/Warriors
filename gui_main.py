@@ -1,8 +1,14 @@
 import pygame
+
+pygame.init()
+pygame.mixer.init()
+
 from pygame.time import Clock
 
 from game import Game
 from models import *
+from ui.colors import *
+from ui.font import show_text, Alignment
 
 WIDTH = 320
 HEIGHT = 240
@@ -10,12 +16,9 @@ FPS = 24
 
 
 def main():
-    pygame.init()
-    pygame.mixer.init()
-
     pygame.display.set_caption("Warriors")
 
-    screen = pygame.display.set_mode((320, 240))
+    screen: pygame.SurfaceType = pygame.display.set_mode((320, 240))
 
     clock = pygame.time.Clock()
     sprites = pygame.sprite.Group()
@@ -40,6 +43,10 @@ def main():
         sprites.update()
         screen.fill((0, 0, 0))
         sprites.draw(screen)
+
+        show_text(screen, str(warrior0), (0, 0), color=GREEN)
+        show_text(screen, str(warrior1), (WIDTH, 0), align=Alignment.RIGHT, color=RED)
+
         pygame.display.flip()
 
     pygame.quit()
