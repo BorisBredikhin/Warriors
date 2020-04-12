@@ -6,7 +6,6 @@ pygame.mixer.init()
 from pygame.time import Clock
 
 from game import Game
-from models import *
 from ui.colors import *
 from ui.font import show_text, Alignment
 
@@ -25,9 +24,7 @@ def main():
 
     game = Game(open('exampledata.json', 'r'))
 
-    [warrior0, warrior1] = Warrior.warriors
-
-    sprites.add(warrior0, warrior1)
+    sprites.add(game.user_warrior, game.ai_warrior)
 
     running = True
 
@@ -39,13 +36,15 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+            else:
+                game.process_event(event)
 
         sprites.update()
         screen.fill((0, 0, 0))
         sprites.draw(screen)
 
-        show_text(screen, str(warrior0), (0, 0), color=GREEN)
-        show_text(screen, str(warrior1), (WIDTH, 0), align=Alignment.RIGHT, color=RED)
+        show_text(screen, str(game.user_warrior), (0, 0), color=GREEN)
+        show_text(screen, str(game.ai_warrior), (WIDTH, 0), align=Alignment.RIGHT, color=RED)
 
         pygame.display.flip()
 
