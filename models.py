@@ -97,10 +97,27 @@ class Warrior(Sprite):
 
         self.rect = self.image.get_rect()
 
+    def set_color(self, color):
+        self.image.fill(color)
+
+    def move(self, dx, dy):
+        '''
+
+        :param dx: смеще6ние по горизонтали, в долях от размера
+        :param dy: смеще6ние по вертикали, в долях от размера
+        '''
+        print('models.Warriors.move', dx, dy)
+        self.rect.x += dx * self.size[0]
+        self.rect.y += dy * self.size[0]
+        print('\t', self.rect)
+
     def __str__(self):
-        return f"Воин {self.name}\nЗдоровье {self.health}\nБроня:{self.armor.health}"
+        return f"Воин {self.name}\nЗдоровье {self.health}\nБроня:{self.armor.integrity}"
 
     def hit(self, enemy: 'Warrior'):
+        if not self.can_hit(enemy):
+            print(f"{self.name} промахивается!")
+            return
         if enemy.is_alive and self.is_alive:
             damage = enemy.set_damage(self.weapon)
             self.weapon.update_average_damage(damage)
@@ -121,6 +138,10 @@ class Warrior(Sprite):
             self.is_alive = False
 
         return damage
+
+    def can_hit(self, enemy):
+        return abs(self.rect.x - enemy.rect.x) <= (self.size[0] + enemy.size[0]) >> 1 and abs(
+            self.rect.y - enemy.rect.y) <= (self.size[1] + enemy.size[1]) >> 1
 
 
 def create_weapons(data):

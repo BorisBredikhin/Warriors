@@ -3,6 +3,10 @@ import pygame
 pygame.init()
 pygame.mixer.init()
 
+import logging
+
+logging.basicConfig(filename="warriors.log", level=logging.DEBUG, filemode='w')
+
 from pygame.time import Clock
 
 from game import Game
@@ -17,12 +21,12 @@ FPS = 24
 def main():
     pygame.display.set_caption("Warriors")
 
-    screen: pygame.SurfaceType = pygame.display.set_mode((320, 240))
+    screen: pygame.SurfaceType = pygame.display.set_mode((WIDTH, HEIGHT))
 
     clock = pygame.time.Clock()
     sprites = pygame.sprite.Group()
 
-    game = Game(open('exampledata.json', 'r'))
+    game = Game(open('exampledata.json', 'r'), (WIDTH, HEIGHT))
 
     sprites.add(game.user_warrior, game.ai_warrior)
 
@@ -36,7 +40,7 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-            else:
+            elif event.type == pygame.KEYDOWN:
                 game.process_event(event)
 
         sprites.update()
