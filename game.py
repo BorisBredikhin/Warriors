@@ -43,3 +43,5 @@ class Game:
             self.user_warrior.move(-1, 0)
         elif event.key == pygame.K_SPACE:
             self.user_warrior.hit(self.ai_warrior)
+
+        self.ai_warrior.make_move(self.user_warrior)
