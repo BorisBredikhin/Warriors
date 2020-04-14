@@ -3,7 +3,7 @@ import json
 import pygame
 
 from models import *
-from ui.colors import *
+from ui.constants import *
 
 
 class Game:

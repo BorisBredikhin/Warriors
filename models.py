@@ -4,6 +4,7 @@ from typing import List
 from pygame.sprite import Sprite
 from pygame.surface import Surface
 
+from ui.constants import WIDTH, HEIGHT
 from utils import Averager, sgn
 
 
@@ -114,7 +115,13 @@ class Warrior(Sprite):
         '''
         print('models.Warriors.move', self.name, dx, dy)
         self.rect.x += dx * self.size[0]
-        self.rect.y += dy * self.size[0]
+        self.rect.y += dy * self.size[1]
+
+        if self.rect.x < 0: self.rect.x = 0
+        if self.rect.y < 0: self.rect.y = 0
+        if self.rect.x > WIDTH - self.size[0]: self.rect.x = WIDTH - self.size[0]
+        if self.rect.y > HEIGHT - self.size[1]: self.rect.y = HEIGHT - self.size[1]
+
         print('\t', self.rect)
 
     def __str__(self):

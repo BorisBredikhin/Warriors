@@ -10,12 +10,8 @@ logging.basicConfig(filename="warriors.log", level=logging.DEBUG, filemode='w')
 from pygame.time import Clock
 
 from game import Game
-from ui.colors import *
+from ui.constants import *
 from ui.font import show_text, Alignment
-
-WIDTH = 320
-HEIGHT = 240
-FPS = 24
 
 
 def main():
